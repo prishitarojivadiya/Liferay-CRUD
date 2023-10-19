@@ -47,7 +47,6 @@ public class EmployeePortlet extends MVCPortlet {
 	@ProcessAction(name = "addEmployee")
 	public void updateOrInsertEmployee(ActionRequest actionRequest, ActionResponse actionResponse) {
 		long employeeId = ParamUtil.getLong(actionRequest, EmployeePortletKeys.EMPLOYEE_ID, GetterUtil.DEFAULT_LONG);
-		System.out.print("\n employeeId  ---> " + ParamUtil.getLong(actionRequest, "employeeId", GetterUtil.DEFAULT_LONG) + "\n");
 		String firstName = ParamUtil.getString(actionRequest, EmployeePortletKeys.FIRST_NAME , GetterUtil.DEFAULT_STRING);
 		String lastName = ParamUtil.getString(actionRequest, EmployeePortletKeys.LAST_NAME, GetterUtil.DEFAULT_STRING);
 		String emailAddress = ParamUtil.getString(actionRequest, EmployeePortletKeys.EMAIL_ADDRESS, GetterUtil.DEFAULT_STRING);

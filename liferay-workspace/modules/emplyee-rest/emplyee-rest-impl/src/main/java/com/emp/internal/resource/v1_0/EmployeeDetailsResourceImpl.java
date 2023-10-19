@@ -34,10 +34,9 @@ public class EmployeeDetailsResourceImpl extends BaseEmployeeDetailsResourceImpl
 	public Page<EmployeeDetails> getEmployeeList() throws Exception {
 		List<EmployeeDetails> employeeLists = new ArrayList<>();
 		List<Employee> employeeList = employeeLocalService.getEmployees(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (Employee emp : employeeList) { // EmployeeDetails employee = getEmployee(emp);
+		for (Employee emp : employeeList) {
 			EmployeeDetails employee = new EmployeeDetails();
 			BeanPropertiesUtil.copyProperties(emp, employee);
-			System.out.println("employee------>" + employee);
 			employeeLists.add(employee);
 		}
 

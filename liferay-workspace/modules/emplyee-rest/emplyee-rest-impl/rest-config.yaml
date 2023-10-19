@@ -1,0 +1,9 @@
+apiDir: "../emplyee-rest-api/src/main/java"
+apiPackagePath: "com.emp"
+application:
+    baseURI: "/emplyee-rest"
+    className: "EmplyeeRestApplication"
+    name: "EmplyeeRest"
+author: "ignek"
+clientDir: "../emplyee-rest-client/src/main/java"
+testDir: "../emplyee-rest-test/src/testIntegration/java"

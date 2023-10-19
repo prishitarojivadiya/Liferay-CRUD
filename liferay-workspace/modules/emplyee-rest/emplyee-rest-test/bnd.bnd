@@ -1,0 +1,5 @@
+Bundle-Name: emplyee-rest-test
+Bundle-SymbolicName: com.emp.test
+Bundle-Version: 1.0.0
+-includeresource: com.emp.client.jar=../emplyee-rest-client/build/libs/com.emp.client-1.0.0.jar;lib:=true
+-provider-policy: ${replacestring;${range;[==,==]};.*,(.*)];$1}

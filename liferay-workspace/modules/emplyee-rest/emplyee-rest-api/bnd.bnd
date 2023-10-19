@@ -1,0 +1,6 @@
+Bundle-Name: emplyee-rest-api
+Bundle-SymbolicName: com.emp.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.emp.dto.v1_0,\
+	com.emp.resource.v1_0

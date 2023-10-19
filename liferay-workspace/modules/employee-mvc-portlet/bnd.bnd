@@ -1,0 +1,4 @@
+Bundle-Name: employee-mvc-portlet
+Bundle-SymbolicName: com.emp.portlet
+Bundle-Version: 1.0.0
+Export-Package: com.emp.portlet.constants

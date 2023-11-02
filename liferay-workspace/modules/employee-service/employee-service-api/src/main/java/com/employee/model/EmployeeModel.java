@@ -17,6 +17,8 @@ package com.employee.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 
+import java.util.Date;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -141,6 +143,62 @@ public interface EmployeeModel extends BaseModel<Employee> {
 	 * @param mobileNumber the mobile number of this employee
 	 */
 	public void setMobileNumber(String mobileNumber);
+
+	/**
+	 * Returns the createdby of this employee.
+	 *
+	 * @return the createdby of this employee
+	 */
+	public long getCreatedby();
+
+	/**
+	 * Sets the createdby of this employee.
+	 *
+	 * @param createdby the createdby of this employee
+	 */
+	public void setCreatedby(long createdby);
+
+	/**
+	 * Returns the modifiedby of this employee.
+	 *
+	 * @return the modifiedby of this employee
+	 */
+	public long getModifiedby();
+
+	/**
+	 * Sets the modifiedby of this employee.
+	 *
+	 * @param modifiedby the modifiedby of this employee
+	 */
+	public void setModifiedby(long modifiedby);
+
+	/**
+	 * Returns the create date of this employee.
+	 *
+	 * @return the create date of this employee
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this employee.
+	 *
+	 * @param createDate the create date of this employee
+	 */
+	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this employee.
+	 *
+	 * @return the modified date of this employee
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this employee.
+	 *
+	 * @param modifiedDate the modified date of this employee
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	@Override
 	public Employee cloneWithOriginalValues();

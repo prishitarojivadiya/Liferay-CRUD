@@ -1,0 +1,4 @@
+Bundle-Name: employee-common
+Bundle-SymbolicName: com.emp.common
+Bundle-Version: 1.0.0
+Export-Package: com.emp.common.*

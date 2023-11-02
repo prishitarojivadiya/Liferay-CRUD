@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Date;
-
 /**
  * The cache model class for representing Employee in entity cache.
  *
@@ -62,7 +60,7 @@ public class EmployeeCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -76,14 +74,6 @@ public class EmployeeCacheModel
 		sb.append(emailAddress);
 		sb.append(", mobileNumber=");
 		sb.append(mobileNumber);
-		sb.append(", createdby=");
-		sb.append(createdby);
-		sb.append(", modifiedby=");
-		sb.append(modifiedby);
-		sb.append(", createDate=");
-		sb.append(createDate);
-		sb.append(", modifiedDate=");
-		sb.append(modifiedDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -130,23 +120,6 @@ public class EmployeeCacheModel
 			employeeImpl.setMobileNumber(mobileNumber);
 		}
 
-		employeeImpl.setCreatedby(createdby);
-		employeeImpl.setModifiedby(modifiedby);
-
-		if (createDate == Long.MIN_VALUE) {
-			employeeImpl.setCreateDate(null);
-		}
-		else {
-			employeeImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			employeeImpl.setModifiedDate(null);
-		}
-		else {
-			employeeImpl.setModifiedDate(new Date(modifiedDate));
-		}
-
 		employeeImpl.resetOriginalValues();
 
 		return employeeImpl;
@@ -161,12 +134,6 @@ public class EmployeeCacheModel
 		lastName = objectInput.readUTF();
 		emailAddress = objectInput.readUTF();
 		mobileNumber = objectInput.readUTF();
-
-		createdby = objectInput.readLong();
-
-		modifiedby = objectInput.readLong();
-		createDate = objectInput.readLong();
-		modifiedDate = objectInput.readLong();
 	}
 
 	@Override
@@ -207,12 +174,6 @@ public class EmployeeCacheModel
 		else {
 			objectOutput.writeUTF(mobileNumber);
 		}
-
-		objectOutput.writeLong(createdby);
-
-		objectOutput.writeLong(modifiedby);
-		objectOutput.writeLong(createDate);
-		objectOutput.writeLong(modifiedDate);
 	}
 
 	public String uuid;
@@ -221,9 +182,5 @@ public class EmployeeCacheModel
 	public String lastName;
 	public String emailAddress;
 	public String mobileNumber;
-	public long createdby;
-	public long modifiedby;
-	public long createDate;
-	public long modifiedDate;
 
 }

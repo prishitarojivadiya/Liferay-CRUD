@@ -19,8 +19,6 @@ import com.liferay.petra.sql.dsl.base.BaseTable;
 
 import java.sql.Types;
 
-import java.util.Date;
-
 /**
  * The table class for the &quot;Employee_Employee&quot; database table.
  *
@@ -44,14 +42,6 @@ public class EmployeeTable extends BaseTable<EmployeeTable> {
 		"emailAddress", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<EmployeeTable, String> mobileNumber = createColumn(
 		"mobileNumber", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<EmployeeTable, Long> createdby = createColumn(
-		"createdby", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<EmployeeTable, Long> modifiedby = createColumn(
-		"modifiedby", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<EmployeeTable, Date> createDate = createColumn(
-		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<EmployeeTable, Date> modifiedDate = createColumn(
-		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 
 	private EmployeeTable() {
 		super("Employee_Employee", EmployeeTable::new);

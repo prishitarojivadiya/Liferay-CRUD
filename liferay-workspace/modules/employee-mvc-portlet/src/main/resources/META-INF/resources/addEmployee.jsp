@@ -2,8 +2,7 @@
 <h1>add Employee</h1>
 <portlet:defineObjects />
 <portlet:actionURL name="addEmployee" var="addEmployeeActionURL" />
-
-<aui:form action="<%= addEmployeeActionURL%>" name="employeeDetails"
+<aui:form action="<%=addEmployeeActionURL%>" name="employeeDetails"
 	method="POST">
 	<div class="d-none">
 		<aui:input id="employeeId" name="employeeId" />

@@ -70,9 +70,7 @@ public class EmployeeModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"uuid_", Types.VARCHAR}, {"employeeId", Types.BIGINT},
 		{"firstName", Types.VARCHAR}, {"lastName", Types.VARCHAR},
-		{"emailAddress", Types.VARCHAR}, {"mobileNumber", Types.VARCHAR},
-		{"createdby", Types.BIGINT}, {"modifiedby", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
+		{"emailAddress", Types.VARCHAR}, {"mobileNumber", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,14 +83,10 @@ public class EmployeeModelImpl
 		TABLE_COLUMNS_MAP.put("lastName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("emailAddress", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("mobileNumber", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("createdby", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("modifiedby", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Employee_Employee (uuid_ VARCHAR(75) null,employeeId LONG not null primary key,firstName VARCHAR(75) null,lastName VARCHAR(75) null,emailAddress VARCHAR(75) null,mobileNumber VARCHAR(75) null,createdby LONG,modifiedby LONG,createDate DATE null,modifiedDate DATE null)";
+		"create table Employee_Employee (uuid_ VARCHAR(75) null,employeeId LONG not null primary key,firstName VARCHAR(75) null,lastName VARCHAR(75) null,emailAddress VARCHAR(75) null,mobileNumber VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Employee_Employee";
 
@@ -256,19 +250,6 @@ public class EmployeeModelImpl
 		attributeSetterBiConsumers.put(
 			"mobileNumber",
 			(BiConsumer<Employee, String>)Employee::setMobileNumber);
-		attributeGetterFunctions.put("createdby", Employee::getCreatedby);
-		attributeSetterBiConsumers.put(
-			"createdby", (BiConsumer<Employee, Long>)Employee::setCreatedby);
-		attributeGetterFunctions.put("modifiedby", Employee::getModifiedby);
-		attributeSetterBiConsumers.put(
-			"modifiedby", (BiConsumer<Employee, Long>)Employee::setModifiedby);
-		attributeGetterFunctions.put("createDate", Employee::getCreateDate);
-		attributeSetterBiConsumers.put(
-			"createDate", (BiConsumer<Employee, Date>)Employee::setCreateDate);
-		attributeGetterFunctions.put("modifiedDate", Employee::getModifiedDate);
-		attributeSetterBiConsumers.put(
-			"modifiedDate",
-			(BiConsumer<Employee, Date>)Employee::setModifiedDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -409,72 +390,6 @@ public class EmployeeModelImpl
 		_mobileNumber = mobileNumber;
 	}
 
-	@JSON
-	@Override
-	public long getCreatedby() {
-		return _createdby;
-	}
-
-	@Override
-	public void setCreatedby(long createdby) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_createdby = createdby;
-	}
-
-	@JSON
-	@Override
-	public long getModifiedby() {
-		return _modifiedby;
-	}
-
-	@Override
-	public void setModifiedby(long modifiedby) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_modifiedby = modifiedby;
-	}
-
-	@JSON
-	@Override
-	public Date getCreateDate() {
-		return _createDate;
-	}
-
-	@Override
-	public void setCreateDate(Date createDate) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_createDate = createDate;
-	}
-
-	@JSON
-	@Override
-	public Date getModifiedDate() {
-		return _modifiedDate;
-	}
-
-	public boolean hasSetModifiedDate() {
-		return _setModifiedDate;
-	}
-
-	@Override
-	public void setModifiedDate(Date modifiedDate) {
-		_setModifiedDate = true;
-
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_modifiedDate = modifiedDate;
-	}
-
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -537,10 +452,6 @@ public class EmployeeModelImpl
 		employeeImpl.setLastName(getLastName());
 		employeeImpl.setEmailAddress(getEmailAddress());
 		employeeImpl.setMobileNumber(getMobileNumber());
-		employeeImpl.setCreatedby(getCreatedby());
-		employeeImpl.setModifiedby(getModifiedby());
-		employeeImpl.setCreateDate(getCreateDate());
-		employeeImpl.setModifiedDate(getModifiedDate());
 
 		employeeImpl.resetOriginalValues();
 
@@ -562,14 +473,6 @@ public class EmployeeModelImpl
 			this.<String>getColumnOriginalValue("emailAddress"));
 		employeeImpl.setMobileNumber(
 			this.<String>getColumnOriginalValue("mobileNumber"));
-		employeeImpl.setCreatedby(
-			this.<Long>getColumnOriginalValue("createdby"));
-		employeeImpl.setModifiedby(
-			this.<Long>getColumnOriginalValue("modifiedby"));
-		employeeImpl.setCreateDate(
-			this.<Date>getColumnOriginalValue("createDate"));
-		employeeImpl.setModifiedDate(
-			this.<Date>getColumnOriginalValue("modifiedDate"));
 
 		return employeeImpl;
 	}
@@ -644,8 +547,6 @@ public class EmployeeModelImpl
 	public void resetOriginalValues() {
 		_columnOriginalValues = Collections.emptyMap();
 
-		_setModifiedDate = false;
-
 		_columnBitmask = 0;
 	}
 
@@ -693,28 +594,6 @@ public class EmployeeModelImpl
 
 		if ((mobileNumber != null) && (mobileNumber.length() == 0)) {
 			employeeCacheModel.mobileNumber = null;
-		}
-
-		employeeCacheModel.createdby = getCreatedby();
-
-		employeeCacheModel.modifiedby = getModifiedby();
-
-		Date createDate = getCreateDate();
-
-		if (createDate != null) {
-			employeeCacheModel.createDate = createDate.getTime();
-		}
-		else {
-			employeeCacheModel.createDate = Long.MIN_VALUE;
-		}
-
-		Date modifiedDate = getModifiedDate();
-
-		if (modifiedDate != null) {
-			employeeCacheModel.modifiedDate = modifiedDate.getTime();
-		}
-		else {
-			employeeCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		return employeeCacheModel;
@@ -784,11 +663,6 @@ public class EmployeeModelImpl
 	private String _lastName;
 	private String _emailAddress;
 	private String _mobileNumber;
-	private long _createdby;
-	private long _modifiedby;
-	private Date _createDate;
-	private Date _modifiedDate;
-	private boolean _setModifiedDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -825,10 +699,6 @@ public class EmployeeModelImpl
 		_columnOriginalValues.put("lastName", _lastName);
 		_columnOriginalValues.put("emailAddress", _emailAddress);
 		_columnOriginalValues.put("mobileNumber", _mobileNumber);
-		_columnOriginalValues.put("createdby", _createdby);
-		_columnOriginalValues.put("modifiedby", _modifiedby);
-		_columnOriginalValues.put("createDate", _createDate);
-		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -863,14 +733,6 @@ public class EmployeeModelImpl
 		columnBitmasks.put("emailAddress", 16L);
 
 		columnBitmasks.put("mobileNumber", 32L);
-
-		columnBitmasks.put("createdby", 64L);
-
-		columnBitmasks.put("modifiedby", 128L);
-
-		columnBitmasks.put("createDate", 256L);
-
-		columnBitmasks.put("modifiedDate", 512L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

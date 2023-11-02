@@ -14,15 +14,15 @@
 
 package com.employee.service.impl;
 
-import java.util.Date;
+import com.employee.model.Employee;
+import com.employee.service.base.EmployeeLocalServiceBaseImpl;
+
+import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-
-import com.employee.model.Employee;
-import com.employee.service.base.EmployeeLocalServiceBaseImpl;
-import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Brian Wing Shun Chan
@@ -34,22 +34,19 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		return employeePersistence.findByEmailAddress(emailAddress);
 	}
 
-	public Employee updateEmployee(long userId, long employeeId, String firstName, String lastName, String emailAddress,
+	public Employee updateEmployee(long employeeId, String firstName, String lastName, String emailAddress,
 			String mobileNumber) {
 		Employee employee = employeePersistence.fetchByPrimaryKey(employeeId);
+
 		if (Validator.isNull(employee)) {
 			employee = employeePersistence.create(counterLocalService.increment());
-			employee.setCreatedby(userId); 
-			employee.setCreateDate(new Date());
 		}
-		employee.setModifiedby(userId); 
-		employee.setModifiedDate(new Date());
+
 		employee.setFirstName(firstName);
 		employee.setLastName(lastName);
 		employee.setEmailAddress(emailAddress);
 		employee.setMobileNumber(mobileNumber);
-		
+
 		return employeePersistence.update(employee);
 	}
-
 }

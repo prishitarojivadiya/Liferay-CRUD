@@ -295,12 +295,11 @@ public class EmployeeLocalServiceUtil {
 	}
 
 	public static Employee updateEmployee(
-		long userId, long employeeId, String firstName, String lastName,
-		String emailAddress, String mobileNumber) {
+		long employeeId, String firstName, String lastName, String emailAddress,
+		String mobileNumber) {
 
 		return getService().updateEmployee(
-			userId, employeeId, firstName, lastName, emailAddress,
-			mobileNumber);
+			employeeId, firstName, lastName, emailAddress, mobileNumber);
 	}
 
 	public static EmployeeLocalService getService() {

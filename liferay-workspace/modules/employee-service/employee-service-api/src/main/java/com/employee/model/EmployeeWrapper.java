@@ -17,7 +17,6 @@ package com.employee.model;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,10 +47,6 @@ public class EmployeeWrapper
 		attributes.put("lastName", getLastName());
 		attributes.put("emailAddress", getEmailAddress());
 		attributes.put("mobileNumber", getMobileNumber());
-		attributes.put("createdby", getCreatedby());
-		attributes.put("modifiedby", getModifiedby());
-		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
 
 		return attributes;
 	}
@@ -93,55 +88,11 @@ public class EmployeeWrapper
 		if (mobileNumber != null) {
 			setMobileNumber(mobileNumber);
 		}
-
-		Long createdby = (Long)attributes.get("createdby");
-
-		if (createdby != null) {
-			setCreatedby(createdby);
-		}
-
-		Long modifiedby = (Long)attributes.get("modifiedby");
-
-		if (modifiedby != null) {
-			setModifiedby(modifiedby);
-		}
-
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
-		}
 	}
 
 	@Override
 	public Employee cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
-	}
-
-	/**
-	 * Returns the create date of this employee.
-	 *
-	 * @return the create date of this employee
-	 */
-	@Override
-	public Date getCreateDate() {
-		return model.getCreateDate();
-	}
-
-	/**
-	 * Returns the createdby of this employee.
-	 *
-	 * @return the createdby of this employee
-	 */
-	@Override
-	public long getCreatedby() {
-		return model.getCreatedby();
 	}
 
 	/**
@@ -195,26 +146,6 @@ public class EmployeeWrapper
 	}
 
 	/**
-	 * Returns the modifiedby of this employee.
-	 *
-	 * @return the modifiedby of this employee
-	 */
-	@Override
-	public long getModifiedby() {
-		return model.getModifiedby();
-	}
-
-	/**
-	 * Returns the modified date of this employee.
-	 *
-	 * @return the modified date of this employee
-	 */
-	@Override
-	public Date getModifiedDate() {
-		return model.getModifiedDate();
-	}
-
-	/**
 	 * Returns the primary key of this employee.
 	 *
 	 * @return the primary key of this employee
@@ -237,26 +168,6 @@ public class EmployeeWrapper
 	@Override
 	public void persist() {
 		model.persist();
-	}
-
-	/**
-	 * Sets the create date of this employee.
-	 *
-	 * @param createDate the create date of this employee
-	 */
-	@Override
-	public void setCreateDate(Date createDate) {
-		model.setCreateDate(createDate);
-	}
-
-	/**
-	 * Sets the createdby of this employee.
-	 *
-	 * @param createdby the createdby of this employee
-	 */
-	@Override
-	public void setCreatedby(long createdby) {
-		model.setCreatedby(createdby);
 	}
 
 	/**
@@ -307,26 +218,6 @@ public class EmployeeWrapper
 	@Override
 	public void setMobileNumber(String mobileNumber) {
 		model.setMobileNumber(mobileNumber);
-	}
-
-	/**
-	 * Sets the modifiedby of this employee.
-	 *
-	 * @param modifiedby the modifiedby of this employee
-	 */
-	@Override
-	public void setModifiedby(long modifiedby) {
-		model.setModifiedby(modifiedby);
-	}
-
-	/**
-	 * Sets the modified date of this employee.
-	 *
-	 * @param modifiedDate the modified date of this employee
-	 */
-	@Override
-	public void setModifiedDate(Date modifiedDate) {
-		model.setModifiedDate(modifiedDate);
 	}
 
 	/**

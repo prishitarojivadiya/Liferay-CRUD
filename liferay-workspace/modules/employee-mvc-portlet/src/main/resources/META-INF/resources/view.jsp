@@ -1,4 +1,5 @@
 <%@ include file="init.jsp"%>
+
 <h1>Employee Details</h1>
 
 <portlet:renderURL var="addEmployeeRenderURL">
@@ -8,19 +9,9 @@
     <a href="<%=addEmployeeRenderURL %>" class="btn  btn-primary btn-default">
         <i class="glyphicon glyphicon-plus"></i> Add Employee
     </a>
-    <portlet:defineObjects />
-<portlet:actionURL name="searchEmployee" var="searchEmployeeActionUrl"/>
-    
-    <aui:form action="<%= searchEmployeeActionUrl %>" method="post">
-      <aui:input id="emailAddress" name="Search" />
-       <button type="submit" id="button" value="Submit">Submit</button>
-   </aui:form>
-   
-
-     
 </div>
 <table class="table table-striped">
-    <tr>
+    <tr >
         <th>Employee Id</th>
         <th>First Name</th>
         <th>Last Name</th>
@@ -60,5 +51,6 @@
          </tr>
     </c:forEach>
 </table>
+
 
 

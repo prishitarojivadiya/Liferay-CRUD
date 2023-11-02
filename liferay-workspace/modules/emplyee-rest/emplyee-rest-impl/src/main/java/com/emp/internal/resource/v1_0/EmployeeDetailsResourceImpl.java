@@ -10,9 +10,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
+import com.emp.common.constants.EmployeeCommonConstant;
 import com.emp.dto.v1_0.EmployeeDetails;
 import com.emp.dto.v1_0.Status;
-import com.emp.portlet.constants.EmployeePortletKeys;
 import com.emp.resource.v1_0.EmployeeDetailsResource;
 import com.employee.model.Employee;
 import com.employee.service.EmployeeLocalService;
@@ -34,10 +34,9 @@ public class EmployeeDetailsResourceImpl extends BaseEmployeeDetailsResourceImpl
 	public Page<EmployeeDetails> getEmployeeList() throws Exception {
 		List<EmployeeDetails> employeeLists = new ArrayList<>();
 		List<Employee> employeeList = employeeLocalService.getEmployees(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-		for (Employee emp : employeeList) { // EmployeeDetails employee = getEmployee(emp);
+		for (Employee emp : employeeList) {
 			EmployeeDetails employee = new EmployeeDetails();
 			BeanPropertiesUtil.copyProperties(emp, employee);
-			System.out.println("employee------>" + employee);
 			employeeLists.add(employee);
 		}
 
@@ -56,9 +55,10 @@ public class EmployeeDetailsResourceImpl extends BaseEmployeeDetailsResourceImpl
 	public Status insertEmployee(EmployeeDetails employeeDetails) throws Exception {
 		Status status = new Status();
 		Long empId = employeeDetails.getEmployeeId();
+		Long userId = (long) 123;
 		try {
-			employeeLocalService.updateEmployee(empId, employeeDetails.getFirstName(),employeeDetails.getLastName(), employeeDetails.getEmailAddress(), employeeDetails.getMobileNumber());
-			status.setMessage(Validator.isNotNull(empId) ? EmployeePortletKeys.UPDATE_MESSAGE : EmployeePortletKeys.INSERT_MESSAGE);
+			employeeLocalService.updateEmployee(userId,empId, employeeDetails.getFirstName(),employeeDetails.getLastName(), employeeDetails.getEmailAddress(), employeeDetails.getMobileNumber());
+			status.setMessage(Validator.isNotNull(empId) ? EmployeeCommonConstant.UPDATE_MESSAGE : EmployeeCommonConstant.INSERT_MESSAGE);
 			status.setStatusCode(Response.Status.OK.getStatusCode());
 		} catch (Exception e) {
 			status.setMessage(e.getMessage());
@@ -75,7 +75,7 @@ public class EmployeeDetailsResourceImpl extends BaseEmployeeDetailsResourceImpl
 	 try {
 		 employeeLocalService.deleteEmployee(employeeId);
 		 status.setStatusCode(Response.Status.OK.getStatusCode());
-		 status.setMessage(EmployeePortletKeys.DELETE_MESSAGE);
+		 status.setMessage(EmployeeCommonConstant.DELETE_MESSAGE);
 		 
 	 }catch (Exception e) {
 		 status.setMessage(e.getMessage());

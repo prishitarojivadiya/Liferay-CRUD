@@ -331,11 +331,12 @@ public class EmployeeLocalServiceWrapper
 
 	@Override
 	public com.employee.model.Employee updateEmployee(
-		long employeeId, String firstName, String lastName, String emailAddress,
-		String mobileNumber) {
+		long userId, long employeeId, String firstName, String lastName,
+		String emailAddress, String mobileNumber) {
 
 		return _employeeLocalService.updateEmployee(
-			employeeId, firstName, lastName, emailAddress, mobileNumber);
+			userId, employeeId, firstName, lastName, emailAddress,
+			mobileNumber);
 	}
 
 	@Override

@@ -270,7 +270,7 @@ public interface EmployeeLocalService
 	public Employee updateEmployee(Employee employee);
 
 	public Employee updateEmployee(
-		long employeeId, String firstName, String lastName, String emailAddress,
-		String mobileNumber);
+		long userId, long employeeId, String firstName, String lastName,
+		String emailAddress, String mobileNumber);
 
 }

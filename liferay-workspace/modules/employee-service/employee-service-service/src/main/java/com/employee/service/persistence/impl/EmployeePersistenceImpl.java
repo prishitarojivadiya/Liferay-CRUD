@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -50,6 +52,7 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1382,6 +1385,29 @@ public class EmployeePersistenceImpl
 			String uuid = _portalUUID.generate();
 
 			employee.setUuid(uuid);
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		Date date = new Date();
+
+		if (isNew && (employee.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				employee.setCreateDate(date);
+			}
+			else {
+				employee.setCreateDate(serviceContext.getCreateDate(date));
+			}
+		}
+
+		if (!employeeModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				employee.setModifiedDate(date);
+			}
+			else {
+				employee.setModifiedDate(serviceContext.getModifiedDate(date));
+			}
 		}
 
 		Session session = null;

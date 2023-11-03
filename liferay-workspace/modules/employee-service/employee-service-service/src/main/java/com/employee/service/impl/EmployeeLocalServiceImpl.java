@@ -22,6 +22,8 @@ import org.osgi.service.component.annotations.Component;
 import com.employee.model.Employee;
 import com.employee.service.base.EmployeeLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -51,5 +53,7 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 
 		return employeePersistence.update(employee);
 	}
+	
+	
 
 }

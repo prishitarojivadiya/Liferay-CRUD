@@ -14,6 +14,7 @@ import com.employee.service.EmployeeLocalService;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,8 +32,8 @@ public class EmployeeCommonServiceImpl implements EmployeeCommonService {
 
 		DSLQuery dslQuery;
 		if (Validator.isNotNull(searchString)) {
-			String search = "%" + searchString + "%";
-			Long empId = null;
+			String search = StringPool.PERCENT + searchString + StringPool.PERCENT;
+			long empId=0L;
 			try {
 				empId = Long.parseLong(searchString);
 			} catch (Exception e) {
@@ -49,8 +50,7 @@ public class EmployeeCommonServiceImpl implements EmployeeCommonService {
 			dslQuery = DSLQueryFactoryUtil.select().from(EmployeeTable.INSTANCE)
 					.where(EmployeeTable.INSTANCE.createdby.eq(userId));
 		}
-		List<Employee> employeeList = employeeLocalService.dslQuery(dslQuery);
-		return employeeList;
+		return employeeLocalService.dslQuery(dslQuery);
 	}
 
 	@Override
@@ -65,9 +65,7 @@ public class EmployeeCommonServiceImpl implements EmployeeCommonService {
 				GetterUtil.DEFAULT_STRING);
 		String mobileNumber = ParamUtil.getString(actionRequest, EmployeeCommonConstant.MOBILE_NUMBER,
 				GetterUtil.DEFAULT_STRING);
-		Employee result = employeeLocalService.updateEmployee(userId, employeeId, firstName, lastName, emailAddress,
-				mobileNumber);
-		return result;
+		return employeeLocalService.updateEmployee(userId, employeeId, firstName, lastName, emailAddress, mobileNumber);
 	}
 
 	@Override

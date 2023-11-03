@@ -6,7 +6,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import com.employee.model.Employee;
-import com.liferay.petra.sql.dsl.query.DSLQuery;
 
 public interface EmployeeCommonService {
 

@@ -5,7 +5,7 @@ package com.emp.common.constants;
  */
 public class EmployeeCommonConstant {
 
-	public static final String EMPLOYEECOMMON = "com_emp_common_EmployeeCommon";
+	public static final String EMPLOYEE_COMMON = "com_emp_common_EmployeeCommon";
 
 	public static final String EMPLOYEE_ID = "employeeId";
 

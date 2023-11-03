@@ -33,7 +33,7 @@ public class EmployeeCommonServiceImpl implements EmployeeCommonService {
 		DSLQuery dslQuery;
 		if (Validator.isNotNull(searchString)) {
 			String search = StringPool.PERCENT + searchString + StringPool.PERCENT;
-			long empId=0L;
+			long empId = GetterUtil.DEFAULT_LONG;
 			try {
 				empId = Long.parseLong(searchString);
 			} catch (Exception e) {

@@ -39,16 +39,16 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		Employee employee = employeePersistence.fetchByPrimaryKey(employeeId);
 		if (Validator.isNull(employee)) {
 			employee = employeePersistence.create(counterLocalService.increment());
-			employee.setCreatedby(userId); 
+			employee.setCreatedby(userId);
 			employee.setCreateDate(new Date());
 		}
-		employee.setModifiedby(userId); 
+		employee.setModifiedby(userId);
 		employee.setModifiedDate(new Date());
 		employee.setFirstName(firstName);
 		employee.setLastName(lastName);
 		employee.setEmailAddress(emailAddress);
 		employee.setMobileNumber(mobileNumber);
-		
+
 		return employeePersistence.update(employee);
 	}
 

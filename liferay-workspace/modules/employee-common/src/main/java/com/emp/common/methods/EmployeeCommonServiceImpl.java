@@ -31,17 +31,20 @@ public class EmployeeCommonServiceImpl implements EmployeeCommonService {
 
 		DSLQuery dslQuery;
 		if (Validator.isNotNull(searchString)) {
-			String search = "%" + searchString + "%" ;
+			String search = "%" + searchString + "%";
 			Long empId = null;
 			try {
 				empId = Long.parseLong(searchString);
-		    }catch(Exception e) {
-		    	log.error(e);
-		    }
-			Predicate userPredict = Predicate.withParentheses((EmployeeTable.INSTANCE.employeeId.eq(empId)).or(EmployeeTable.INSTANCE.firstName.like(search)).or(EmployeeTable.INSTANCE.lastName.like(search)).or(EmployeeTable.INSTANCE.mobileNumber.like(search)).or(EmployeeTable.INSTANCE.emailAddress.like(search)));
+			} catch (Exception e) {
+				log.error(e);
+			}
+			Predicate userPredict = Predicate.withParentheses((EmployeeTable.INSTANCE.employeeId.eq(empId))
+					.or(EmployeeTable.INSTANCE.firstName.like(search)).or(EmployeeTable.INSTANCE.lastName.like(search))
+					.or(EmployeeTable.INSTANCE.mobileNumber.like(search))
+					.or(EmployeeTable.INSTANCE.emailAddress.like(search)));
 			dslQuery = DSLQueryFactoryUtil.select().from(EmployeeTable.INSTANCE)
 					.where((EmployeeTable.INSTANCE.createdby.eq(userId)).and(userPredict));
-			
+
 		} else {
 			dslQuery = DSLQueryFactoryUtil.select().from(EmployeeTable.INSTANCE)
 					.where(EmployeeTable.INSTANCE.createdby.eq(userId));

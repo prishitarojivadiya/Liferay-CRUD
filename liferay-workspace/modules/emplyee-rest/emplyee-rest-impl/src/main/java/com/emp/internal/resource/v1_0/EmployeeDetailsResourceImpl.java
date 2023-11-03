@@ -54,11 +54,14 @@ public class EmployeeDetailsResourceImpl extends BaseEmployeeDetailsResourceImpl
 	@Override
 	public Status insertEmployee(EmployeeDetails employeeDetails) throws Exception {
 		Status status = new Status();
-		Long empId = employeeDetails.getEmployeeId();
-		Long userId = (long) 123;
+		long empId = employeeDetails.getEmployeeId();
+		long userId = contextUser.getUserId();
 		try {
-			employeeLocalService.updateEmployee(userId,empId, employeeDetails.getFirstName(),employeeDetails.getLastName(), employeeDetails.getEmailAddress(), employeeDetails.getMobileNumber());
-			status.setMessage(Validator.isNotNull(empId) ? EmployeeCommonConstant.UPDATE_MESSAGE : EmployeeCommonConstant.INSERT_MESSAGE);
+			employeeLocalService.updateEmployee(userId, empId, employeeDetails.getFirstName(),
+					employeeDetails.getLastName(), employeeDetails.getEmailAddress(),
+					employeeDetails.getMobileNumber());
+			status.setMessage(Validator.isNotNull(empId) ? EmployeeCommonConstant.UPDATE_MESSAGE
+					: EmployeeCommonConstant.INSERT_MESSAGE);
 			status.setStatusCode(Response.Status.OK.getStatusCode());
 		} catch (Exception e) {
 			status.setMessage(e.getMessage());
@@ -68,21 +71,19 @@ public class EmployeeDetailsResourceImpl extends BaseEmployeeDetailsResourceImpl
 		return status;
 	}
 
-	@Override 
-	public Status deleteEmployee(@NotNull Long employeeId) throws Exception 
-	{
-	 Status status = new Status();
-	 try {
-		 employeeLocalService.deleteEmployee(employeeId);
-		 status.setStatusCode(Response.Status.OK.getStatusCode());
-		 status.setMessage(EmployeeCommonConstant.DELETE_MESSAGE);
-		 
-	 }catch (Exception e) {
-		 status.setMessage(e.getMessage());
-		 status.setStatusCode(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-	 }
-	 return status; 
+	@Override
+	public Status deleteEmployee(@NotNull Long employeeId) throws Exception {
+		Status status = new Status();
+		try {
+			employeeLocalService.deleteEmployee(employeeId);
+			status.setStatusCode(Response.Status.OK.getStatusCode());
+			status.setMessage(EmployeeCommonConstant.DELETE_MESSAGE);
+
+		} catch (Exception e) {
+			status.setMessage(e.getMessage());
+			status.setStatusCode(Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+		}
+		return status;
 	}
-	 
 
 }

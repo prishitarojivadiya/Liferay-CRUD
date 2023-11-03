@@ -10,11 +10,10 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 
 public interface EmployeeCommonService {
 
-	List<Employee> getEmployeeList(String emailAddress,Long userId);
-	
-	Employee updateEmployee(ActionRequest actionRequest, ActionResponse actionResponse);
-	
-	void deleteEmployee(ActionRequest actionRequest, ActionResponse actionResponse);
+	List<Employee> getEmployeeList(String emailAddress, Long userId);
 
+	Employee updateEmployee(ActionRequest actionRequest, ActionResponse actionResponse);
+
+	void deleteEmployee(ActionRequest actionRequest, ActionResponse actionResponse);
 
 }

@@ -30,15 +30,17 @@ import com.liferay.portal.kernel.util.ParamUtil;
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class EmployeePortlet extends MVCPortlet {
-	
+
 	@Reference
 	private EmployeeLocalService employeeLocalService;
-	
+
 	@Reference
 	private EmployeeCommonService employeeCommonService;
 
-	
 	/*
+	 * I have used dsl uery on button click because of that i have commented render
+	 * method
+	 * 
 	 * @Override public void render(RenderRequest renderRequest, RenderResponse
 	 * renderResponse) throws IOException, PortletException {
 	 * CacheRegistryUtil.clear(); List<Employee> employeeList =
@@ -56,15 +58,14 @@ public class EmployeePortlet extends MVCPortlet {
 	public void deleteEmployee(ActionRequest actionRequest, ActionResponse actionResponse) {
 		employeeCommonService.deleteEmployee(actionRequest, actionResponse);
 	}
-	
+
 	@ProcessAction(name = "searchEmployee")
 	public void fetchByEmailAddress(ActionRequest actionRequest, ActionResponse actionResponse) throws IOException {
 		String searchString = ParamUtil.getString(actionRequest, "Search");
 		long userId = Long.parseLong(actionRequest.getRemoteUser());
-		CacheRegistryUtil.clear();
-		List<Employee> employeeList = employeeCommonService.getEmployeeList(searchString,userId);
+		List<Employee> employeeList = employeeCommonService.getEmployeeList(searchString, userId);
 		actionRequest.setAttribute("employeeList", employeeList);
 	}
-	
+
 	private static final Log log = LogFactoryUtil.getLog(EmployeePortlet.class);
 }

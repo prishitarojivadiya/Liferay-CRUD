@@ -1,20 +1,23 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
 
-<service-builder dependency-injector="ds" package-path="com.employee">
+<service-builder dependency-injector="ds"
+	package-path="com.employee">
 	<namespace>Employee</namespace>
-	<entity local-service="true" name="Employee" remote-service="true" uuid="true">
-		<column name="employeeId" type="long" primary="true"/>
+	<entity local-service="true" name="Employee"
+		remote-service="true" uuid="true">
+		<column name="employeeId" type="long" primary="true" />
 		<column name="firstName" type="String" />
 		<column name="lastName" type="String" />
 		<column name="emailAddress" type="String" />
 		<column name="mobileNumber" type="String" />
-		
+
 		<column name="createdby" type="long"></column>
 		<column name="modifiedby" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-
+		<column name="companyId" type="long"></column>
+		<column name="category" type="String"></column>
 		<order by="asc">
 			<order-column name="employeeId" />
 		</order>

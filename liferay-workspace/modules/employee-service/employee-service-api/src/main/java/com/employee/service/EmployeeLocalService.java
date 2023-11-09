@@ -16,9 +16,11 @@ package com.employee.service;
 
 import com.employee.model.Employee;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -203,6 +205,17 @@ public interface EmployeeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Employee fetchEmployee(long employeeId);
 
+	/**
+	 * Returns the employee with the matching UUID and company.
+	 *
+	 * @param uuid the employee's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching employee, or <code>null</code> if a matching employee could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Employee fetchEmployeeByUuidAndCompanyId(
+		String uuid, long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -215,6 +228,18 @@ public interface EmployeeLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Employee getEmployee(long employeeId) throws PortalException;
+
+	/**
+	 * Returns the employee with the matching UUID and company.
+	 *
+	 * @param uuid the employee's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching employee
+	 * @throws PortalException if a matching employee could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Employee getEmployeeByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException;
 
 	/**
 	 * Returns a range of all the employees.
@@ -237,6 +262,10 @@ public interface EmployeeLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEmployeesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -271,6 +300,6 @@ public interface EmployeeLocalService
 
 	public Employee updateEmployee(
 		long userId, long employeeId, String firstName, String lastName,
-		String emailAddress, String mobileNumber);
+		String emailAddress, String mobileNumber, String category);
 
 }

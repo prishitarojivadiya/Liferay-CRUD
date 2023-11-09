@@ -16,6 +16,7 @@ import com.emp.dto.v1_0.Status;
 import com.emp.resource.v1_0.EmployeeDetailsResource;
 import com.employee.model.Employee;
 import com.employee.service.EmployeeLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -55,11 +56,16 @@ public class EmployeeDetailsResourceImpl extends BaseEmployeeDetailsResourceImpl
 	public Status insertEmployee(EmployeeDetails employeeDetails) throws Exception {
 		Status status = new Status();
 		long empId = employeeDetails.getEmployeeId();
+		String category = StringPool.DOUBLE_QUOTE;
+		String[] categories = employeeDetails.getEmployeeCategory();
+		for (String cat : categories) {
+			category = (cat == categories[0]) ? cat : category + StringPool.COMMA + cat;
+		}
 		long userId = contextUser.getUserId();
 		try {
 			employeeLocalService.updateEmployee(userId, empId, employeeDetails.getFirstName(),
-					employeeDetails.getLastName(), employeeDetails.getEmailAddress(),
-					employeeDetails.getMobileNumber());
+					employeeDetails.getLastName(), employeeDetails.getEmailAddress(), employeeDetails.getMobileNumber(),
+					category);
 			status.setMessage(Validator.isNotNull(empId) ? EmployeeCommonConstant.UPDATE_MESSAGE
 					: EmployeeCommonConstant.INSERT_MESSAGE);
 			status.setStatusCode(Response.Status.OK.getStatusCode());

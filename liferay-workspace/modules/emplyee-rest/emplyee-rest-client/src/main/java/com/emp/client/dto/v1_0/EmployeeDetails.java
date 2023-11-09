@@ -41,6 +41,27 @@ public class EmployeeDetails implements Cloneable, Serializable {
 
 	protected String emailAddress;
 
+	public String[] getEmployeeCategory() {
+		return employeeCategory;
+	}
+
+	public void setEmployeeCategory(String[] employeeCategory) {
+		this.employeeCategory = employeeCategory;
+	}
+
+	public void setEmployeeCategory(
+		UnsafeSupplier<String[], Exception> employeeCategoryUnsafeSupplier) {
+
+		try {
+			employeeCategory = employeeCategoryUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] employeeCategory;
+
 	public Long getEmployeeId() {
 		return employeeId;
 	}

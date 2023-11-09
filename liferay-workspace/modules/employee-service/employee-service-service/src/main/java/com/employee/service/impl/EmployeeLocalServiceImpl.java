@@ -22,8 +22,8 @@ import org.osgi.service.component.annotations.Component;
 import com.employee.model.Employee;
 import com.employee.service.base.EmployeeLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -37,12 +37,16 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 	}
 
 	public Employee updateEmployee(long userId, long employeeId, String firstName, String lastName, String emailAddress,
-			String mobileNumber) {
+			String mobileNumber, String category) {
 		Employee employee = employeePersistence.fetchByPrimaryKey(employeeId);
 		if (Validator.isNull(employee)) {
 			employee = employeePersistence.create(counterLocalService.increment());
 			employee.setCreatedby(userId);
 			employee.setCreateDate(new Date());
+			User user = UserLocalServiceUtil.fetchUser(userId);
+			long companyId = user.getCompanyId();
+			employee.setCompanyId(companyId);
+
 		}
 		employee.setModifiedby(userId);
 		employee.setModifiedDate(new Date());
@@ -50,10 +54,8 @@ public class EmployeeLocalServiceImpl extends EmployeeLocalServiceBaseImpl {
 		employee.setLastName(lastName);
 		employee.setEmailAddress(emailAddress);
 		employee.setMobileNumber(mobileNumber);
-
-		return employeePersistence.update(employee);
+		employee.setCategory(category);
+		return employeeLocalService.updateEmployee(employee);
 	}
-	
-	
 
 }

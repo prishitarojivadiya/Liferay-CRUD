@@ -30,4 +30,6 @@ public class EmployeeCommonConstant {
 	public static final String CATEGORY = "category";
 	
 	public static final String FILTER = "filter";
+	
+	public static final String EMPLOYEE_LIST = "employeeList";
 }

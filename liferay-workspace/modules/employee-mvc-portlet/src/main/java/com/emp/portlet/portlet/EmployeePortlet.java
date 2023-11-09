@@ -111,7 +111,7 @@ public class EmployeePortlet extends MVCPortlet {
 				employeeList
 						.add(new EmployeeDTO(employeeId, firstName, lastName, emailAddress, mobileNumber, category));
 			}
-			actionRequest.setAttribute("employeeList", employeeList);
+			actionRequest.setAttribute(EmployeeCommonConstant.EMPLOYEE_LIST, employeeList);
 		} catch (Exception e) {
 			log.error(e);
 		}

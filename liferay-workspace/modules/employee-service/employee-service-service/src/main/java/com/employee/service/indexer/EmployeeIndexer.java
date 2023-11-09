@@ -37,14 +37,11 @@ public class EmployeeIndexer extends BaseIndexer<Employee> {
 	private static final String CLASS_NAME = Employee.class.getName();
 
 	public EmployeeIndexer() {
-
 		setDefaultSelectedFieldNames(Field.COMPANY_ID, EmployeeCommonConstant.USER_ID,
 				EmployeeCommonConstant.EMPLOYEE_ID, EmployeeCommonConstant.FIRST_NAME, EmployeeCommonConstant.LAST_NAME,
 				EmployeeCommonConstant.EMAIL_ADDRESS, EmployeeCommonConstant.MOBILE_NUMBER,
 				EmployeeCommonConstant.CATEGORY);
 		setFilterSearch(Boolean.TRUE);
-		setPermissionAware(Boolean.TRUE);
-		setSelectAllLocales(Boolean.TRUE);
 	}
 
 	@Override
@@ -54,9 +51,7 @@ public class EmployeeIndexer extends BaseIndexer<Employee> {
 
 	@Override
 	protected void doDelete(Employee employee) throws Exception {
-
 		deleteDocument(employee.getCompanyId(), employee.getEmployeeId());
-
 	}
 
 	@Override
@@ -69,7 +64,6 @@ public class EmployeeIndexer extends BaseIndexer<Employee> {
 		String emailAddress = employee.getEmailAddress();
 		String mobileNumber = employee.getMobileNumber();
 		String category = employee.getCategory();
-
 		Document document = getBaseModelDocument(CLASS_NAME, employee);
 		document.addNumber(EmployeeCommonConstant.USER_ID, userId);
 		document.addNumber(EmployeeCommonConstant.EMPLOYEE_ID, employeeId);
@@ -79,14 +73,12 @@ public class EmployeeIndexer extends BaseIndexer<Employee> {
 		document.addKeyword(EmployeeCommonConstant.MOBILE_NUMBER, mobileNumber);
 		document.addKeyword(EmployeeCommonConstant.CATEGORY, category);
 		document.addNumber(Field.COMPANY_ID, companyId);
-
 		return document;
 	}
 
 	@Override
 	protected Summary doGetSummary(Document document, Locale locale, String snippet, PortletRequest portletRequest,
 			PortletResponse portletResponse) throws Exception {
-
 		Summary summary = createSummary(document);
 		summary.setMaxContentLength(200);
 		return summary;
@@ -102,7 +94,6 @@ public class EmployeeIndexer extends BaseIndexer<Employee> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 		reindex(companyId);
-		log.info("doReindex(String[] ids)" + companyId);
 	}
 
 	@Override
@@ -112,12 +103,9 @@ public class EmployeeIndexer extends BaseIndexer<Employee> {
 	}
 
 	protected void reindex(long companyId) throws PortalException {
-
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery = employeeLocalService
 				.getIndexableActionableDynamicQuery();
-
 		indexableActionableDynamicQuery.setCompanyId(companyId);
-
 		indexableActionableDynamicQuery
 				.setPerformActionMethod((ActionableDynamicQuery.PerformActionMethod<Employee>) employee -> {
 					try {
@@ -129,11 +117,7 @@ public class EmployeeIndexer extends BaseIndexer<Employee> {
 						}
 					}
 				});
-
 		indexableActionableDynamicQuery.performActions();
-
 	}
-
 	private static final Log log = LogFactoryUtil.getLog(EmployeeIndexer.class);
-
 }

@@ -13,7 +13,7 @@ public interface EmployeeCommonService {
 
 	List<Employee> getEmployeeList(String emailAddress, long userId);
 	
-	Hits getEmployeeListUsingElastic(long complanyid, long userId, String searchString, String[] filter) throws Exception ;
+	Hits getEmployeeListUsingElastic(long companyId, long userId, String searchString, String[] filter) throws Exception ;
 
 	Employee updateEmployee(EmployeeDTO employee,long userId);
 

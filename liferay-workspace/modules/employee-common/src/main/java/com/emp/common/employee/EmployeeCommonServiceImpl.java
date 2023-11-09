@@ -62,14 +62,14 @@ public class EmployeeCommonServiceImpl implements EmployeeCommonService {
 	}
 
 	@Override
-	public Hits getEmployeeListUsingElastic(long complanyid, long userId, String searchString, String[] filter)
+	public Hits getEmployeeListUsingElastic(long companyId, long userId, String searchString, String[] filter)
 			throws Exception {
 
-		SearchContext context = CommonUtil.getSearchContext(complanyid, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		SearchContext context = CommonUtil.getSearchContext(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		BooleanQuery mainQuery = new BooleanQueryImpl();
 
 		mainQuery = CommonUtil.addParameterInQuery(Field.ENTRY_CLASS_NAME, Employee.class.getName(), mainQuery);
-		mainQuery = CommonUtil.addParameterInQuery(Field.COMPANY_ID, String.valueOf(complanyid), mainQuery);
+		mainQuery = CommonUtil.addParameterInQuery(Field.COMPANY_ID, String.valueOf(companyId), mainQuery);
 		mainQuery = CommonUtil.addParameterInQuery(EmployeeCommonConstant.USER_ID, String.valueOf(userId), mainQuery);
 
 		if (ArrayUtil.isNotEmpty(filter)) {
@@ -78,7 +78,6 @@ public class EmployeeCommonServiceImpl implements EmployeeCommonService {
 			for (String category : filter) {
 				filterQuery = CommonUtil.addParameterInQuery(EmployeeCommonConstant.CATEGORY, category, filterQuery,
 						BooleanClauseOccur.SHOULD);
-				log.info(category);
 			}
 
 			mainQuery = CommonUtil.addBooleanQuery(mainQuery, filterQuery);

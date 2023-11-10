@@ -111,6 +111,11 @@ components:
         mobileNumber:
           description: mobile number
           type: string
+        employeeCategory:
+          description: category
+          type: array
+          items:
+            type: string
     Status:
       description: Responce Status
       properties: 

@@ -19,6 +19,7 @@ import com.employee.model.EmployeeModel;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.json.JSON;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -72,7 +75,8 @@ public class EmployeeModelImpl
 		{"firstName", Types.VARCHAR}, {"lastName", Types.VARCHAR},
 		{"emailAddress", Types.VARCHAR}, {"mobileNumber", Types.VARCHAR},
 		{"createdby", Types.BIGINT}, {"modifiedby", Types.BIGINT},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"companyId", Types.BIGINT}, {"category", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -89,10 +93,12 @@ public class EmployeeModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedby", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("category", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Employee_Employee (uuid_ VARCHAR(75) null,employeeId LONG not null primary key,firstName VARCHAR(75) null,lastName VARCHAR(75) null,emailAddress VARCHAR(75) null,mobileNumber VARCHAR(75) null,createdby LONG,modifiedby LONG,createDate DATE null,modifiedDate DATE null)";
+		"create table Employee_Employee (uuid_ VARCHAR(75) null,employeeId LONG not null primary key,firstName VARCHAR(75) null,lastName VARCHAR(75) null,emailAddress VARCHAR(75) null,mobileNumber VARCHAR(75) null,createdby LONG,modifiedby LONG,createDate DATE null,modifiedDate DATE null,companyId LONG,category VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table Employee_Employee";
 
@@ -112,20 +118,26 @@ public class EmployeeModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EMAILADDRESS_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 2L;
+	public static final long EMAILADDRESS_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EMPLOYEEID_COLUMN_BITMASK = 4L;
+	public static final long EMPLOYEEID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -269,6 +281,12 @@ public class EmployeeModelImpl
 		attributeSetterBiConsumers.put(
 			"modifiedDate",
 			(BiConsumer<Employee, Date>)Employee::setModifiedDate);
+		attributeGetterFunctions.put("companyId", Employee::getCompanyId);
+		attributeSetterBiConsumers.put(
+			"companyId", (BiConsumer<Employee, Long>)Employee::setCompanyId);
+		attributeGetterFunctions.put("category", Employee::getCategory);
+		attributeSetterBiConsumers.put(
+			"category", (BiConsumer<Employee, String>)Employee::setCategory);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -475,6 +493,57 @@ public class EmployeeModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_companyId = companyId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCompanyId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
+	}
+
+	@JSON
+	@Override
+	public String getCategory() {
+		if (_category == null) {
+			return "";
+		}
+		else {
+			return _category;
+		}
+	}
+
+	@Override
+	public void setCategory(String category) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_category = category;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(Employee.class.getName()));
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -502,7 +571,7 @@ public class EmployeeModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, Employee.class.getName(), getPrimaryKey());
+			getCompanyId(), Employee.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -541,6 +610,8 @@ public class EmployeeModelImpl
 		employeeImpl.setModifiedby(getModifiedby());
 		employeeImpl.setCreateDate(getCreateDate());
 		employeeImpl.setModifiedDate(getModifiedDate());
+		employeeImpl.setCompanyId(getCompanyId());
+		employeeImpl.setCategory(getCategory());
 
 		employeeImpl.resetOriginalValues();
 
@@ -570,6 +641,10 @@ public class EmployeeModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		employeeImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		employeeImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
+		employeeImpl.setCategory(
+			this.<String>getColumnOriginalValue("category"));
 
 		return employeeImpl;
 	}
@@ -717,6 +792,16 @@ public class EmployeeModelImpl
 			employeeCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		employeeCacheModel.companyId = getCompanyId();
+
+		employeeCacheModel.category = getCategory();
+
+		String category = employeeCacheModel.category;
+
+		if ((category != null) && (category.length() == 0)) {
+			employeeCacheModel.category = null;
+		}
+
 		return employeeCacheModel;
 	}
 
@@ -789,6 +874,8 @@ public class EmployeeModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _companyId;
+	private String _category;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -829,6 +916,8 @@ public class EmployeeModelImpl
 		_columnOriginalValues.put("modifiedby", _modifiedby);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("companyId", _companyId);
+		_columnOriginalValues.put("category", _category);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -871,6 +960,10 @@ public class EmployeeModelImpl
 		columnBitmasks.put("createDate", 256L);
 
 		columnBitmasks.put("modifiedDate", 512L);
+
+		columnBitmasks.put("companyId", 1024L);
+
+		columnBitmasks.put("category", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}
